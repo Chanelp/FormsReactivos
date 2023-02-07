@@ -1,0 +1,9 @@
+<!-- Crear un Form Control con el template -->
+<input type="text" [formControl]="nameField" />
+<button (click)="getNameValue()">Get json</button>
+
+<code>
+  <pre>
+    {{ nameField | json}}
+  </pre>
+</code>
