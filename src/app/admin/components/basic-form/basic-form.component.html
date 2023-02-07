@@ -37,8 +37,7 @@
 
 <p>
   Image: {{ imageField.value }}
-  <input type="file"
-  accept="image/*">
+  <input type="file" accept="image/*" />
 </p>
 
 <!-- SELECTS -->
@@ -62,12 +61,40 @@
   </select>
 </p>
 
+<!-- INPUTS CHECKBOX Y RADIO -->
+<p>
+  Agree: {{ agreeField.value }}
+  <input type="checkbox" [formControl]="agreeField" />
+</p>
 
+<p>
+  Gender: {{ genderField.value }}
+  <label>
+    Male
+    <input name="genre" type="radio" value="male" [formControl]="genderField" />
+  </label>
+  <label>
+    Female
+    <input name="genre" type="radio" value="female" [formControl]="genderField" />
+  </label>
+  <label>
+    Other
+    <input name="genre" type="radio" value="other" [formControl]="genderField" />
+  </label>
+</p>
 
-
-
-
-
+<!-- Preferencias -->
+<div>
+  <p>Preferencias: {{ preferencias.value }}</p>
+  Contenido digital
+  <input name="prefer" type="checkbox" value="Contenido-digital" [formControl]="preferencias">
+  Diseño y UX
+  <input name="prefer" type="checkbox" value="Diseño-UX" [formControl]="preferencias">
+  Marketing
+  <input name="prefer" type="checkbox" value="Marketing" [formControl]="preferencias">
+  Negocios
+  <input name="prefer" type="checkbox" value="Negocios" [formControl]="preferencias">
+</div>
 
 <!-- <code>
   <pre>

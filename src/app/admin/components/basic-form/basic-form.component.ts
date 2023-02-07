@@ -20,7 +20,11 @@ export class BasicFormComponent implements OnInit {
   // Selects
   categoryField = new FormControl('tipo-1');
   multiplytagField = new FormControl('');
-
+  // Radio y checkbox
+  agreeField = new FormControl(false);
+  genderField = new FormControl();
+  // Preferencias
+  preferencias = new FormControl('');
 
 
 
