@@ -8,16 +8,23 @@ import { FormControl } from '@angular/forms';
 })
 export class BasicFormComponent implements OnInit {
 
-  //Crear un Form Control
+  //Crear un Form Control -inputs
   nameField = new FormControl('Aprendiendo Reactive Forms');
+  emailField = new FormControl('');
+  phoneField = new FormControl('');
+  colorField = new FormControl('');
+  dateField = new FormControl('');
+  numberField = new FormControl('');
+  searchField = new FormControl('');
+  imageField = new FormControl('');
 
   constructor() { }
 
   ngOnInit(): void {
     // Obtener un observable del valor
-    // this.nameField.valueChanges.subscribe(value => {
-    //   console.log(value);
-    // });
+    this.nameField.valueChanges.subscribe(value => {
+      console.log(value);
+    });
   }
 
   getNameValue(){
