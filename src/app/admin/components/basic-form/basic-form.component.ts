@@ -17,6 +17,13 @@ export class BasicFormComponent implements OnInit {
   numberField = new FormControl('');
   searchField = new FormControl('');
   imageField = new FormControl('');
+  // Selects
+  categoryField = new FormControl('tipo-1');
+  multiplytagField = new FormControl('');
+
+
+
+
 
   constructor() { }
 
