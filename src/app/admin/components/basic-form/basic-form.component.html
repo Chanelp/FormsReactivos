@@ -37,6 +37,20 @@
     <input type="tel" formControlName="phone" />
   </p>
 
+  <div class="messages" [class.active]="phoneField.touched && phoneField.invalid">
+    <p>
+      <strong *ngIf="phoneField.touched && phoneField.hasError('required')">
+        Este campo es requerido
+      </strong>
+    </p>
+
+    <p>
+      <strong *ngIf="phoneField.hasError('maxlength')">
+        Debe tener máximo 10 caracteres
+      </strong>
+    </p>
+  </div>
+
   <p>
     Color: {{ colorField.value }}
     <input type="color" formControlName="color" />
@@ -149,7 +163,7 @@
   </div>
 
   <p>
-    <button type="submit">
+    <button [disabled]="form.invalid" type="submit">
       Enviar
     </button>
   </p>

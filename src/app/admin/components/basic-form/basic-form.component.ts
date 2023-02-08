@@ -1,55 +1,72 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import {
+  FormControl,
+  Validators,
+  FormGroup,
+  FormBuilder,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-basic-form',
   templateUrl: './basic-form.component.html',
-  styleUrls: ['./basic-form.component.scss']
+  styleUrls: ['./basic-form.component.scss'],
 })
 export class BasicFormComponent implements OnInit {
-
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.maxLength(10)]),
-    email: new FormControl(''),
-    phone: new FormControl(''),
-    color: new FormControl('#000000'),
-    date: new FormControl(''),
-    id: new FormControl(''),
-    search: new FormControl(''),
-    image: new FormControl(''),
-    category: new FormControl('tipo-1'),
-    multiply: new FormControl(''),
-    agree: new FormControl(false),
-    gender: new FormControl(false),
-    preferencias: new FormControl('')
-  });
-
+  form: FormGroup = new FormGroup({});
   valores = this.form.value;
-  formValue = JSON.parse(localStorage.getItem('Form'))
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) {
+    this.buildForm();
+  }
 
   ngOnInit(): void {
-    this.nameField.valueChanges
-    .subscribe(value => {
+    this.nameField.valueChanges.subscribe((value) => {
       console.log(value);
     });
   }
 
-  // Save in LocalStorage
-  save(event: Event) {
-    if(this.form.invalid) {
-      this.form.controls.name.markAllAsTouched();
-
-      return;
-    }
-
-    this.valores = this.form.value;
-    localStorage.setItem(`Form${this.valores.id}`, JSON.stringify(this.valores));
-    console.log(this.formValue);
+  getNameValue() {
+    console.log(this.nameField.value);
   }
 
-  get nameField(){
+  // Save in LocalStorage
+  save(event: Event) {
+    if (this.form.valid) {
+      this.valores = this.form.value;
+      localStorage.setItem(
+        `Form${this.valores.id}`,
+        JSON.stringify(this.valores)
+      );
+
+      this.getFormLocalStorage(this.valores.id);
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
+
+  getFormLocalStorage(id) {
+    console.log(JSON.parse(localStorage.getItem(`Form${id}`)));
+  }
+
+  private buildForm() {
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.maxLength(10)]],
+      email: [''],
+      phone: ['', Validators.required],
+      color: ['#000000'],
+      date: [''],
+      id: [1],
+      search: [''],
+      image: [''],
+      category: ['tipo-1'],
+      multiply: [''],
+      agree: [false],
+      gender: [false],
+      preferencias: [''],
+    });
+  }
+
+  get nameField() {
     return this.form.get('name');
   }
 
@@ -108,7 +125,4 @@ export class BasicFormComponent implements OnInit {
   get preferenciasField() {
     return this.form.get('preferencias');
   }
-
 }
-
-
