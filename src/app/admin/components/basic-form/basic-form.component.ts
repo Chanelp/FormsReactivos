@@ -61,17 +61,18 @@ export class BasicFormComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(10)]],
-      email: [''],
+      name: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]],
+      email: ['', Validators.email],
       phone: ['', Validators.required],
       color: ['#000000'],
       date: [''],
       id: [1],
+      age: [18, [Validators.required, Validators.min(18), Validators.max(100)]],
       search: [''],
       image: [''],
       category: ['tipo-1'],
       multiply: [''],
-      agree: [false],
+      agree: [false, [Validators.requiredTrue]],
       gender: [false],
       preferencias: [''],
     });
@@ -135,5 +136,9 @@ export class BasicFormComponent implements OnInit {
 
   get preferenciasField() {
     return this.form.get('preferencias');
+  }
+
+  get ageField(){
+    return this.form.get('age');
   }
 }

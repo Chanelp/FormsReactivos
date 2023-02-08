@@ -15,7 +15,7 @@
 
   <div class="messages" [class.active]="nameField.touched && nameField.invalid">
     <p>
-      <strong *ngIf="nameField.touched && nameField.hasError('required')">
+      <strong *ngIf="nameField.hasError('required')">
         Este campo es requerido
       </strong>
     </p>
@@ -25,12 +25,32 @@
         Debe tener máximo 10 caracteres
       </strong>
     </p>
+
+    <p>
+      <strong *ngIf="nameField.hasError('pattern')">
+        No debe tener caracteres especiales
+      </strong>
+    </p>
   </div>
 
   <p>
     Email: {{ emailField.value }}
     <input type="email" formControlName="email" />
   </p>
+
+  <div class="messages" [class.active]="emailField.touched && emailField.invalid">
+    <p>
+      <strong *ngIf="emailField.hasError('required')">
+        Este campo es requerido
+      </strong>
+    </p>
+
+    <p>
+      <strong *ngIf="emailField.hasError('email')">
+        No es un email válido
+      </strong>
+    </p>
+  </div>
 
   <p>
     Phone: {{ phoneField.value }}
@@ -39,7 +59,7 @@
 
   <div class="messages" [class.active]="phoneField.touched && phoneField.invalid">
     <p>
-      <strong *ngIf="phoneField.touched && phoneField.hasError('required')">
+      <strong *ngIf="phoneField.hasError('required')">
         Este campo es requerido
       </strong>
     </p>
@@ -47,6 +67,28 @@
     <p>
       <strong *ngIf="phoneField.hasError('maxlength')">
         Debe tener máximo 10 caracteres
+      </strong>
+    </p>
+  </div>
+
+  <p>
+    Age: {{ ageField.value }}
+    <input type="number" formControlName="age" />
+  </p>
+
+  <div class="messages" [class.active]="ageField.touched && ageField.invalid">
+    <p>
+      <strong *ngIf="ageField.touched && ageField.hasError('required')">
+        Este campo es requerido
+      </strong>
+    </p>
+
+    <p>
+      <strong *ngIf="ageField.hasError('max')">
+        Debe ser menor a 100 años
+      </strong>
+      <strong *ngIf="ageField.hasError('min')">
+        Debe ser mayor a 17 años
       </strong>
     </p>
   </div>
