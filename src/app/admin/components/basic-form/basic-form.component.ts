@@ -20,8 +20,19 @@ export class BasicFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //Escuchar los cambios un campo forma reactiva
     this.nameField.valueChanges.subscribe((value) => {
       console.log(value);
+    });
+
+    //Escuchar los cambios de todos los campos forma reactiva
+    this.form.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
+
+    //Subscribirse a un solo field usando formGroup
+    this.form.get('name').valueChanges.subscribe(v => {
+      console.log(v);
     });
   }
 
