@@ -1,154 +1,156 @@
-<!-- Crear un Form Control con el template -->
-<p>
-  Name: {{ nameField.valid }}
-  <input
-    [class.is-valid]="isnameFieldValid"
-    [class.is-invalid]="isnameFieldInvalid"
-    type="text"
-    [formControl]="nameField"
-  />
-  <button [disabled]="nameField.invalid" (click)="getNameValue()">
-    Get json
-  </button>
-</p>
-
-<div class="messages" [class.active]="nameField.touched && nameField.invalid">
+<!-- Form Group -->
+<form [formGroup]="form" (ngSubmit)="save($event)">
   <p>
-    <strong *ngIf="nameField.touched && nameField.hasError('required')">
-      Este campo es requerido
-    </strong>
+    Name: {{ nameField.valid }}
+    <input
+      [class.is-valid]="isNameFieldValid"
+      [class.is-invalid]="isNameFieldInvalid"
+      type="text"
+      formControlName="name"
+    />
+    <button [disabled]="nameField.invalid">
+      Get json
+    </button>
+  </p>
+
+  <div class="messages" [class.active]="nameField.touched && nameField.invalid">
+    <p>
+      <strong *ngIf="nameField.touched && nameField.hasError('required')">
+        Este campo es requerido
+      </strong>
+    </p>
+
+    <p>
+      <strong *ngIf="nameField.hasError('maxlength')">
+        Debe tener máximo 10 caracteres
+      </strong>
+    </p>
+  </div>
+
+  <p>
+    Email: {{ emailField.value }}
+    <input type="email" formControlName="email" />
   </p>
 
   <p>
-    <strong *ngIf="nameField.hasError('maxlength')">
-      Debe tener máximo 10 caracteres
-    </strong>
+    Phone: {{ phoneField.value }}
+    <input type="tel" formControlName="phone" />
   </p>
-</div>
 
-<p>
-  Email: {{ emailField.value }}
-  <input type="email" [formControl]="emailField" />
-</p>
+  <p>
+    Color: {{ colorField.value }}
+    <input type="color" formControlName="color" />
+  </p>
 
-<p>
-  Phone: {{ phoneField.value }}
-  <input type="tel" [formControl]="phoneField" />
-</p>
+  <p>
+    Date: {{ dateField.value }}
+    <input type="date" formControlName="date" />
+  </p>
 
-<p>
-  Color: {{ colorField.value }}
-  <input type="color" [formControl]="colorField" />
-</p>
+  <p>
+    Id: {{ idField.value }}
+    <input type="number" formControlName="id" />
+  </p>
 
-<p>
-  Date: {{ dateField.value }}
-  <input type="date" [formControl]="dateField" />
-</p>
+  <p>
+    Search: {{ searchField.value }}
+    <input type="search" formControlName="search" />
+  </p>
 
-<p>
-  Number: {{ numberField.value }}
-  <input type="number" [formControl]="numberField" />
-</p>
+  <p>
+    Image: {{ imageField.value }}
+    <input type="file" accept="image/*" />
+  </p>
 
-<p>
-  Search: {{ searchField.value }}
-  <input type="search" [formControl]="searchField" />
-</p>
+  <!-- SELECTS -->
+  <p>
+    Tipo: {{ categoryField.value }}
+    <select formControlName="category">
+      <option value="tipo-1">Mamífero</option>
+      <option value="tipo-2">Anfibio</option>
+      <option value="tipo-3">Reptiles</option>
+      <option value="tipo-4">Aves</option>
+    </select>
+  </p>
 
-<p>
-  Image: {{ imageField.value }}
-  <input type="file" accept="image/*" />
-</p>
+  <p>
+    Tipo: {{ tagField.value }}
+    <select formControlName="multiply" multiple size="2">
+      <option value="tag-1">Tag 1</option>
+      <option value="tag-2">Tag 2</option>
+      <option value="tag-3">Tag 3</option>
+      <option value="tag-4">Tag 4</option>
+    </select>
+  </p>
 
-<!-- SELECTS -->
-<p>
-  Tipo: {{ categoryField.value }}
-  <select [formControl]="categoryField">
-    <option value="tipo-1">Mamífero</option>
-    <option value="tipo-2">Anfibio</option>
-    <option value="tipo-3">Reptiles</option>
-    <option value="tipo-4">Aves</option>
-  </select>
-</p>
+  <!-- INPUTS CHECKBOX Y RADIO -->
+  <p>
+    Agree: {{ agreeField.value }}
+    <input type="checkbox" formControlName="agree" />
+  </p>
 
-<p>
-  Tipo: {{ multiplytagField.value }}
-  <select [formControl]="multiplytagField" multiple size="2">
-    <option value="tag-1">Tag 1</option>
-    <option value="tag-2">Tag 2</option>
-    <option value="tag-3">Tag 3</option>
-    <option value="tag-4">Tag 4</option>
-  </select>
-</p>
+  <p>
+    Gender: {{ genderField.value }}
+    <label>
+      Male
+      <input name="genre" type="radio" value="male" formControlName="gender" />
+    </label>
+    <label>
+      Female
+      <input
+        name="genre"
+        type="radio"
+        value="female"
+        formControlName="gender"
+      />
+    </label>
+    <label>
+      Other
+      <input
+        name="genre"
+        type="radio"
+        value="other"
+        formControlName="gender"
+      />
+    </label>
+  </p>
 
-<!-- INPUTS CHECKBOX Y RADIO -->
-<p>
-  Agree: {{ agreeField.value }}
-  <input type="checkbox" [formControl]="agreeField" />
-</p>
-
-<p>
-  Gender: {{ genderField.value }}
-  <label>
-    Male
-    <input name="genre" type="radio" value="male" [formControl]="genderField" />
-  </label>
-  <label>
-    Female
+  <!-- Preferencias -->
+  <div>
+    <p>Preferencias: {{ preferenciasField.value }}</p>
+    Contenido digital
     <input
-      name="genre"
-      type="radio"
-      value="female"
-      [formControl]="genderField"
+      name="prefer"
+      type="checkbox"
+      value="Contenido-digital"
+      formControlName="preferencias"
     />
-  </label>
-  <label>
-    Other
+    Diseño y UX
     <input
-      name="genre"
-      type="radio"
-      value="other"
-      [formControl]="genderField"
+      name="prefer"
+      type="checkbox"
+      value="Diseño-UX"
+      formControlName="preferencias"
     />
-  </label>
-</p>
+    Marketing
+    <input
+      name="prefer"
+      type="checkbox"
+      value="Marketing"
+      formControlName="preferencias"
+    />
+    Negocios
+    <input
+      name="prefer"
+      type="checkbox"
+      value="Negocios"
+      formControlName="preferencias"
+    />
+  </div>
 
-<!-- Preferencias -->
-<div>
-  <p>Preferencias: {{ preferencias.value }}</p>
-  Contenido digital
-  <input
-    name="prefer"
-    type="checkbox"
-    value="Contenido-digital"
-    [formControl]="preferencias"
-  />
-  Diseño y UX
-  <input
-    name="prefer"
-    type="checkbox"
-    value="Diseño-UX"
-    [formControl]="preferencias"
-  />
-  Marketing
-  <input
-    name="prefer"
-    type="checkbox"
-    value="Marketing"
-    [formControl]="preferencias"
-  />
-  Negocios
-  <input
-    name="prefer"
-    type="checkbox"
-    value="Negocios"
-    [formControl]="preferencias"
-  />
-</div>
-
-<!-- <code>
-  <pre>
-    {{ nameField }}
-  </pre>
-</code> -->
+  <p>
+    <button type="submit">
+      Enviar
+    </button>
+  </p>
+</form>
