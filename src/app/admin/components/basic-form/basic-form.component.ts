@@ -26,9 +26,6 @@ export class BasicFormComponent implements OnInit {
   // Preferencias
   preferencias = new FormControl('');
 
-
-
-
   constructor() { }
 
   ngOnInit(): void {
@@ -40,6 +37,14 @@ export class BasicFormComponent implements OnInit {
 
   getNameValue(){
     console.log(this.nameField.value);
+  }
+
+  get isnameFieldValid(){
+    return this.nameField.touched && this.nameField.valid;
+  }
+
+  get isnameFieldInvalid(){
+    return this.nameField.touched && this.nameField.invalid;
   }
 
 }

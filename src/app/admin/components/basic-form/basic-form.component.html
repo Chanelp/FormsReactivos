@@ -1,21 +1,30 @@
 <!-- Crear un Form Control con el template -->
 <p>
-  Name: {{ nameField.value }} {{ nameField.valid }}
-  <input type="text" [formControl]="nameField" />
-  <button [disabled]="nameField.invalid" (click)="getNameValue()">Get json</button>
+  Name: {{ nameField.valid }}
+  <input
+    [class.is-valid]="isnameFieldValid"
+    [class.is-invalid]="isnameFieldInvalid"
+    type="text"
+    [formControl]="nameField"
+  />
+  <button [disabled]="nameField.invalid" (click)="getNameValue()">
+    Get json
+  </button>
 </p>
 
-<p>
-  <strong *ngIf="nameField.touched && nameField.hasError('required')">
-    Este campo es requerido
-  </strong>
-</p>
+<div class="messages" [class.active]="nameField.touched && nameField.invalid">
+  <p>
+    <strong *ngIf="nameField.touched && nameField.hasError('required')">
+      Este campo es requerido
+    </strong>
+  </p>
 
-<p>
-  <strong *ngIf="nameField.hasError('maxlength')">
-    Debe tener máximo 10 caracteres
-  </strong>
-</p>
+  <p>
+    <strong *ngIf="nameField.hasError('maxlength')">
+      Debe tener máximo 10 caracteres
+    </strong>
+  </p>
+</div>
 
 <p>
   Email: {{ emailField.value }}
@@ -87,11 +96,21 @@
   </label>
   <label>
     Female
-    <input name="genre" type="radio" value="female" [formControl]="genderField" />
+    <input
+      name="genre"
+      type="radio"
+      value="female"
+      [formControl]="genderField"
+    />
   </label>
   <label>
     Other
-    <input name="genre" type="radio" value="other" [formControl]="genderField" />
+    <input
+      name="genre"
+      type="radio"
+      value="other"
+      [formControl]="genderField"
+    />
   </label>
 </p>
 
@@ -99,13 +118,33 @@
 <div>
   <p>Preferencias: {{ preferencias.value }}</p>
   Contenido digital
-  <input name="prefer" type="checkbox" value="Contenido-digital" [formControl]="preferencias">
+  <input
+    name="prefer"
+    type="checkbox"
+    value="Contenido-digital"
+    [formControl]="preferencias"
+  />
   Diseño y UX
-  <input name="prefer" type="checkbox" value="Diseño-UX" [formControl]="preferencias">
+  <input
+    name="prefer"
+    type="checkbox"
+    value="Diseño-UX"
+    [formControl]="preferencias"
+  />
   Marketing
-  <input name="prefer" type="checkbox" value="Marketing" [formControl]="preferencias">
+  <input
+    name="prefer"
+    type="checkbox"
+    value="Marketing"
+    [formControl]="preferencias"
+  />
   Negocios
-  <input name="prefer" type="checkbox" value="Negocios" [formControl]="preferencias">
+  <input
+    name="prefer"
+    type="checkbox"
+    value="Negocios"
+    [formControl]="preferencias"
+  />
 </div>
 
 <!-- <code>
