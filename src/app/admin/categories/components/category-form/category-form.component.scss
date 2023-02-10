@@ -1,0 +1,58 @@
+input {
+  &.is-valid {
+    border: 2px solid greenyellow;
+  }
+  &.is-invalid {
+    border: 2px solid red;
+  }
+}
+
+.messages {
+  opacity: 0;
+  transition: all .5s ease-in;
+  &.active{
+    opacity: 1;
+  }
+}
+
+form{
+  mat-card{
+    margin: 12px auto;
+    width: 70%;
+  }
+  mat-form-field {
+    width: 100%;
+  }
+
+  div{
+    margin: 14px;
+    padding: 12px;
+  }
+}
+
+.fileImg::before {
+  background-color: #dcade7;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  content: 'Seleccionar imagen'; /* texto por defecto */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.fileImg input[type="file"] {
+  opacity: 0;
+  width: 200px;
+  height: 32px;
+  display: inline-block;
+}
+
+.ctnp{
+  max-width: 400px;
+  margin: 16px auto;
+}
