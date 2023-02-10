@@ -23,8 +23,19 @@ export class CategoriesService {
     return localStorage.setItem(`Form${data.id}`,JSON.stringify(data));
   }
 
-  setAll(){
+  getAllInfo(){
+    let data: Animals[] = JSON.parse(localStorage.getItem('listaForms'));
+    return data;
+  }
 
+  delete(data: Animals){
+    return localStorage.removeItem(`Form${data.id}`);
+  }
+
+  checkAnimal(name: string){
+    let data = this.getAllInfo();
+    const rta = data.find(animal => animal.nombre === name);
+    return rta;
   }
 
 }

@@ -1,1 +1,21 @@
-<a routerLink="create">Crear </a>
+<a routerLink="create">Agregar animal</a>
+
+<div *ngFor="let formu of formularios">
+  <mat-card class="ctnp">
+    <mat-card-header>
+      <div mat-card-avatar><img src="/assets/images/avatar2.png"></div>
+      <mat-card-title>{{ formu.nombre }}</mat-card-title>
+      <mat-card-subtitle>{{ formu.tipo }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="formu.imagen" />
+    <mat-card-content>
+      <p>
+        {{ formu.descripcion }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="accent" [routerLink]="['edit', formu.id]">Editar</button>
+      <button mat-stroked-button color="accent">Eliminar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

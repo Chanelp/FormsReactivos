@@ -19,13 +19,16 @@
         <ng-container *ngIf="nameField.hasError('required')">
           Este campo es requerido
         </ng-container>
+        <ng-container *ngIf="nameField.hasError('nodisponible')">
+          Este animal ya existe
+        </ng-container>
       </mat-error>
       <mat-icon matSuffix *ngIf="isNameFieldValid">done</mat-icon>
       <mat-icon matSuffix *ngIf="isNameFieldInvalid">close</mat-icon>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Descripcion</mat-label>
+      <mat-label>Descripción</mat-label>
       <input type="text" matInput formControlName="descripcion" />
       <mat-error
         [class.active]="descripcionField.touched && descripcionField.invalid"
@@ -60,12 +63,13 @@
 
     <!-- INPUT IMAGEN -->
     <mat-form-field>
+      <img *ngIf="imageField.value" [src]="imageField.value">
       <input
+      (change)="uploadImg($event)"
         matInput
         input
         type="file"
         accept="image/*"
-        formControlName="imagen"
         class="fileImg"
       />
       <mat-error [class.active]="imageField.touched && imageField.invalid">
@@ -85,39 +89,3 @@
     </button>
   </div>
 </form>
-<!-- <mat-card *ngIf="valores" class="ctnp">
-  <mat-card-header>
-    <div mat-card-avatar></div>
-    <mat-card-title>{{ valores.nombre }}</mat-card-title>
-    <mat-card-subtitle>{{ valores.tipo }}</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image [src]="valores.imagen">
-  <mat-card-content>
-    <p>
-      {{ valores.descripcion }}
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>{{ valores.categoria }}</button>
-  </mat-card-actions>
-</mat-card> -->
-
-
-<mat-card *ngFor="let formu in valores" class="ctnp">
-  <div *ngFor="let f in form">
-    <mat-card-header >
-      <div mat-card-avatar></div>
-      <mat-card-title>{{ f['nombre'].value }}</mat-card-title>
-      <mat-card-subtitle>{{ f['tipo'].value }}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image [src]="f['imagen'].value">
-    <mat-card-content>
-      <p>
-        {{ f['descripcion'].value }}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>{{ f['categoria'].value }}</button>
-    </mat-card-actions>
-  </div>
-</mat-card>
