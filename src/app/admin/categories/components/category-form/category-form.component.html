@@ -34,7 +34,7 @@
       <div class="row">
         <div class="col-xs">
           <label class="btn-upload">
-          <!-- <img *ngIf="image$ | async as image" [src]="image" /> -->
+          <img *ngIf="imageField.value" [src]="imageField.value" />
           <button type="button" mat-raised-button (click)="fileInput.click()">
             <mat-icon aria-hidden="false" aria-label="Carga de archivo">cloud_upload</mat-icon>
             Cargar Imagen
