@@ -11,4 +11,19 @@ export class MyValidators {
     return null;
   }
 
+  static validatePassword(control: AbstractControl) {
+    const value = control.value;
+    if (!MyValidators.containsNumber(value)) {
+      return {invalid_password: true};
+    }
+    return null;
+  }
+
+  private static containsNumber(value: string): boolean {
+    return value.split('').some(w => MyValidators.isNumber(w)) !== undefined;
+  }
+  private static isNumber(value:string): boolean {
+    return !isNaN(parseInt(value, 10));
+  }
+
 }

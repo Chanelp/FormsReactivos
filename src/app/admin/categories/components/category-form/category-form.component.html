@@ -1,91 +1,55 @@
-<form [formGroup]="form" (ngSubmit)="save($event)">
+<form [formGroup]="form" (ngSubmit)="save()">
   <mat-card>
-    <mat-form-field>
-      <mat-label>Id</mat-label>
-      <input type="number" matInput formControlName="id" />
-      <mat-error [class.active]="idField.valid">
-        <ng-container *ngIf="nameField.hasError('required')">
-          Este campo es requerido
-        </ng-container>
-      </mat-error>
-      <mat-icon matSuffix *ngIf="isNameFieldValid">done</mat-icon>
-      <mat-icon matSuffix *ngIf="isNameFieldInvalid">close</mat-icon>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Nombre</mat-label>
-      <input type="text" matInput formControlName="nombre" />
-      <mat-error [class.active]="isNameFieldInvalid">
-        <ng-container *ngIf="nameField.hasError('required')">
-          Este campo es requerido
-        </ng-container>
-        <ng-container *ngIf="nameField.hasError('nodisponible')">
-          Este animal ya existe
-        </ng-container>
-      </mat-error>
-      <mat-icon matSuffix *ngIf="isNameFieldValid">done</mat-icon>
-      <mat-icon matSuffix *ngIf="isNameFieldInvalid">close</mat-icon>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Descripción</mat-label>
-      <input type="text" matInput formControlName="descripcion" />
-      <mat-error
-        [class.active]="descripcionField.touched && descripcionField.invalid"
-      >
-        <ng-container *ngIf="descripcionField.hasError('required')">
-          Este campo es requerido
-        </ng-container>
-      </mat-error>
-      <mat-icon matSuffix *ngIf="isDescripcionFieldValid">done</mat-icon>
-      <mat-icon matSuffix *ngIf="isDescripcionFieldInvalid">close</mat-icon>
-    </mat-form-field>
-
-    <!-- SELECTS -->
-    <mat-form-field appearance="fill">
-      <mat-label>Tipo</mat-label>
-      <mat-select formControlName="tipo">
-        <mat-option name="tipo" value="Mamífero">Mamífero</mat-option>
-        <mat-option name="tipo" value="Anfibio">Anfibio</mat-option>
-        <mat-option name="tipo" value="Reptiles">Reptiles</mat-option>
-        <mat-option name="tipo" value="Aves">Aves</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Clasificación</mat-label>
-      <mat-select formControlName="clasificacion">
-        <mat-option name="clasificacion" value="Acuático">Acuático</mat-option>
-        <mat-option name="clasificacion" value="Terrestre">Terrestre</mat-option>
-        <mat-option name="clasificacion" value="Aéreo">Aéreo</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <!-- INPUT IMAGEN -->
-    <mat-form-field>
-      <img *ngIf="imageField.value" [src]="imageField.value">
-      <input
-      (change)="uploadImg($event)"
-        matInput
-        input
-        type="file"
-        accept="image/*"
-        class="fileImg"
-      />
-      <mat-error [class.active]="imageField.touched && imageField.invalid">
-        <ng-container *ngIf="imageField.hasError('required')">
-          Este campo es requerido
-        </ng-container>
-      </mat-error>
-    </mat-form-field>
+    <mat-card-header>
+      <mat-card-title>Categoría</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-xs">
+          <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input
+              placeholder="Nombre"
+              formControlName="name"
+              matInput
+              type="text"
+            />
+            <div
+              class="messages"
+              *ngIf="nameField.touched && nameField.invalid"
+            >
+              <mat-error *ngIf="nameField.hasError('required')">
+                Este campo es requerido
+              </mat-error>
+              <mat-error *ngIf="nameField.hasError('minlength')">
+                Minimo debe tener 4 car..
+              </mat-error>
+              <mat-error *ngIf="nameField.hasError('not_available')">
+                Este nombre ya lo tiene otra categoría
+              </mat-error>
+            </div>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <img *ngIf="image$ | async as image" [src]="image" />
+          <input type="file" (change)="uploadFile($event)" />
+          <div
+            class="messages"
+            *ngIf="imageField.touched && imageField.invalid"
+          >
+            <mat-error *ngIf="imageField.hasError('required')">
+              Este campo es requerido
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">
+        Guardar categoría
+      </button>
+    </mat-card-actions>
   </mat-card>
-  <div>
-    <button
-      [disabled]="form.invalid"
-      type="submit"
-      mat-raised-button
-      color="primary">
-      Guardar
-    </button>
-  </div>
 </form>

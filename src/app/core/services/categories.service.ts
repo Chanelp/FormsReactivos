@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Animals } from '../models/animals.model';
+import { Category } from '../models/category.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,27 +15,21 @@ export class CategoriesService {
     return JSON.parse(localStorage.getItem(`Form${id}`));
   }
 
-  create(data: Animals){
-    return localStorage.setItem(`Form${data.id}`,JSON.stringify(data));
+  getAllCategories() {
+    return this.http.get<Category[]>(`${environment.url_api}/categories/`);
   }
 
-  update(data: Animals){
-    return localStorage.setItem(`Form${data.id}`,JSON.stringify(data));
+  createCategory(data: Partial<Category>) {
+    return this.http.post<Category>(`${environment.url_api}/categories/`, data);
   }
 
-  getAllInfo(){
-    let data: Animals[] = JSON.parse(localStorage.getItem('listaForms'));
-    return data;
+  updateCategory(id: string, data: Partial<Category>) {
+    return this.http.post<Category>(`${environment.url_api}/categories/${id}`, data);
   }
 
-  delete(data: Animals){
-    return localStorage.removeItem(`Form${data.id}`);
+  checkCategory(name: string) {
+    return this.http.post(`${environment.url_api}/categories/availability`, {name});
   }
 
-  checkAnimal(name: string){
-    let data = this.getAllInfo();
-    const rta = data.find(animal => animal.nombre === name);
-    return rta;
-  }
 
 }

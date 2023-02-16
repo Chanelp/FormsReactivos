@@ -1,21 +1,30 @@
-<a routerLink="create">Agregar animal</a>
-
-<div *ngFor="let formu of formularios">
-  <mat-card class="ctnp">
-    <mat-card-header>
-      <div mat-card-avatar><img src="/assets/images/avatar2.png"></div>
-      <mat-card-title>{{ formu.nombre }}</mat-card-title>
-      <mat-card-subtitle>{{ formu.tipo }}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image [src]="formu.imagen" />
-    <mat-card-content>
-      <p>
-        {{ formu.descripcion }}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="accent" [routerLink]="['edit', formu.id]">Editar</button>
-      <button mat-stroked-button color="accent">Eliminar</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+<a mat-raised-button routerLink="create">Crear nueva categoría</a>
+<table
+  mat-table
+  [dataSource]="categories"
+  class="mat-elevation-z8 products-table"
+>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let category">{{ category._id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let category">{{ category.name }}</td>
+  </ng-container>
+  <ng-container matColumnDef="image">
+    <th mat-header-cell *matHeaderCellDef>Image</th>
+    <td mat-cell *matCellDef="let category">
+      <img [src]="category.image" alt="category" />
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let category">
+      <a mat-raised-button>Editar</a>
+      <button mat-raised-button color="warn">Eliminar</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

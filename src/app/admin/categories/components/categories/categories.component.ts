@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CategoriesService } from 'src/app/core/services/categories.service';
-import { Animals } from 'src/app/core/models/animals.model';
+
+import { CategoriesService } from './../../../../core/services/categories.service';
+import { Category } from './../../../../core/models/category.model';
+
 
 @Component({
   selector: 'app-categories',
@@ -10,18 +11,22 @@ import { Animals } from 'src/app/core/models/animals.model';
 })
 export class CategoriesComponent implements OnInit {
 
-  formularios = JSON.parse(localStorage.getItem('listaForms'));
+  categories: Category[] = [];
+  displayedColumns: string[] = ['id', 'name', 'image', 'actions'];
 
-  constructor(private cs: CategoriesService) { }
+  constructor(
+    private categoriesService: CategoriesService,
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.formularios);
-    //this.getAllInfo();
+    this.getCategories();
   }
 
-  // getAllInfo(){
-  //   this.formularios = this.cs.getAllInfo();
-  //   console.log(this.formularios);
-  // }
+  private getCategories() {
+    this.categoriesService.getAllCategories()
+    .subscribe(categories => {
+      this.categories = categories;
+    });
+  }
 
 }
