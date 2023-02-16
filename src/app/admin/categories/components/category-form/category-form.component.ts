@@ -14,24 +14,31 @@ import { MyValidators } from 'src/app/utils/validators';
 export class CategoryFormComponent implements OnInit {
   form: FormGroup;
   image$: Observable<string>;
+  percentageProgressBar = 0;
+  showProgressBar = false;
 
-  @Input() category: Category;
+  isNew: boolean = true; //Flag para saber si podemos crear o editar
+
+  //Usar set para saber el momento exacto en que llega la información, usar como ciclo de vida
+  @Input()
+  set category(data: Category) {
+    if (data) {
+      this.isNew = false;
+      this.form.patchValue(data);
+    }
+  }
 
   @Output() create = new EventEmitter();
   @Output() update = new EventEmitter();
 
-  percentageProgressBar = 0;
-  showProgressBar = false;
-
   constructor(
     private formBuilder: FormBuilder,
-    private storage: AngularFireStorage,
+    private storage: AngularFireStorage
   ) {
     this.buildForm();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   private buildForm() {
     this.form = this.formBuilder.group({
@@ -49,11 +56,10 @@ export class CategoryFormComponent implements OnInit {
 
   saveAndUpdate() {
     if (this.form.valid) {
-      if (this.category) {
-       this.update.emit(this.form.value);
-      }
-      else {
+      if (this.isNew) {
         this.create.emit(this.form.value);
+      } else {
+        this.update.emit(this.form.value);
       }
     } else {
       this.form.markAllAsTouched();
