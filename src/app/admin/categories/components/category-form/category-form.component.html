@@ -55,7 +55,8 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit">
-        {{ this.categoryId ? 'Actualizar categoría' : 'Crear producto' }}
+        <span *ngIf="!category">Crear Categoría</span>
+        <span *ngIf="category">Editar Categoría</span>
       </button>
     </mat-card-actions>
   </mat-card>

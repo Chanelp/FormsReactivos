@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-
-import { CategoriesService } from './../../../../core/services/categories.service';
+import { Category } from 'src/app/core/models/category.model';
 import { MyValidators } from 'src/app/utils/validators';
 
 @Component({
@@ -16,30 +14,23 @@ import { MyValidators } from 'src/app/utils/validators';
 export class CategoryFormComponent implements OnInit {
   form: FormGroup;
   image$: Observable<string>;
+
+  @Input() category: Category;
+
+  @Output() create = new EventEmitter();
+  @Output() update = new EventEmitter();
+
   percentageProgressBar = 0;
   showProgressBar = false;
-  categoryId: string;
 
   constructor(
     private formBuilder: FormBuilder,
-    private categoriesService: CategoriesService,
-    private router: Router,
     private storage: AngularFireStorage,
-    private route: ActivatedRoute
   ) {
     this.buildForm();
   }
 
   ngOnInit(): void {
-    //Detectar id por medio de la ruta
-    this.route.params.subscribe((params: Params) => {
-      this.categoryId = params['id'];
-
-      // Traer la info de la categoría al form
-      if (this.categoryId) {
-        this.getCategory();
-      }
-    });
   }
 
   private buildForm() {
@@ -58,38 +49,15 @@ export class CategoryFormComponent implements OnInit {
 
   saveAndUpdate() {
     if (this.form.valid) {
-      if (this.categoryId) {
-        this.updateCategory();
+      if (this.category) {
+       this.update.emit(this.form.value);
       }
       else {
-        this.createCategory();
+        this.create.emit(this.form.value);
       }
     } else {
       this.form.markAllAsTouched();
     }
-  }
-
-  private createCategory() {
-    const data = this.form.value;
-    this.categoriesService.createCategory(data).subscribe((rta) => {
-      this.router.navigate(['/admin/categories']);
-    });
-  }
-
-  private updateCategory() {
-    const data = this.form.value;
-    this.categoriesService
-      .updateCategory(this.categoryId, data)
-      .subscribe((rta) => {
-        this.router.navigate(['/admin/categories']);
-      });
-  }
-
-  //Traer info de la categoría para ponerla en el form y actualizarla
-  private getCategory() {
-    this.categoriesService.getCategory(this.categoryId).subscribe((data) => {
-      this.form.patchValue(data);
-    });
   }
 
   uploadFile(event) {
