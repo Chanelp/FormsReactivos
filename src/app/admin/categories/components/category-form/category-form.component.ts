@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { CategoriesService } from './../../../../core/services/categories.service';
 
@@ -16,6 +16,8 @@ export class CategoryFormComponent implements OnInit {
 
   form: FormGroup;
   image$: Observable<string>;
+  percentageProgressBar = 0;
+  showProgressBar = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,12 +63,14 @@ export class CategoryFormComponent implements OnInit {
   }
 
   uploadFile(event) {
+    this.showProgressBar = true;
     const image = event.target.files[0];
-    const name = 'category.png';
+    const name = `categories/${image.name}`;
     const ref = this.storage.ref(name);
     const task = this.storage.upload(name, image);
 
-    task.snapshotChanges()
+    task.percentageChanges()
+    .pipe(map(Math.ceil))
     .pipe(
       finalize(() => {
         this.image$ = ref.getDownloadURL();
@@ -74,9 +78,12 @@ export class CategoryFormComponent implements OnInit {
           console.log(url);
           this.imageField.setValue(url);
         });
+        this.showProgressBar = false;
       })
     )
-    .subscribe();
+    .subscribe(per => {
+      this.percentageProgressBar = per
+    });
   }
 
 }
