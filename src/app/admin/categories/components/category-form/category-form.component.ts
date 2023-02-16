@@ -11,10 +11,9 @@ import { MyValidators } from 'src/app/utils/validators';
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
-  styleUrls: ['./category-form.component.scss']
+  styleUrls: ['./category-form.component.scss'],
 })
 export class CategoryFormComponent implements OnInit {
-
   form: FormGroup;
   image$: Observable<string>;
   percentageProgressBar = 0;
@@ -32,27 +31,39 @@ export class CategoryFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //Detectar id por meido de la ruta
+    //Detectar id por medio de la ruta
     this.route.params.subscribe((params: Params) => {
       this.categoryId = params['id'];
 
       // Traer la info de la categoría al form
-      if (this.categoryId){
+      if (this.categoryId) {
         this.getCategory();
       }
-    })
+    });
   }
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4), MyValidators.validateCategory(this.categoriesService)]],
-      image: ['', Validators.required]
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          //MyValidators.validateCategory(this.categoriesService),
+        ],
+      ],
+      image: ['', Validators.required],
     });
   }
 
-  save() {
+  saveAndUpdate() {
     if (this.form.valid) {
-      this.createCategory();
+      if (this.categoryId) {
+        this.updateCategory();
+      }
+      else {
+        this.createCategory();
+      }
     } else {
       this.form.markAllAsTouched();
     }
@@ -60,15 +71,23 @@ export class CategoryFormComponent implements OnInit {
 
   private createCategory() {
     const data = this.form.value;
-    this.categoriesService.createCategory(data)
-    .subscribe(rta => {
+    this.categoriesService.createCategory(data).subscribe((rta) => {
       this.router.navigate(['/admin/categories']);
     });
   }
 
-  private getCategory(){
-    this.categoriesService.getCategory(this.categoryId)
-    .subscribe(data => {
+  private updateCategory() {
+    const data = this.form.value;
+    this.categoriesService
+      .updateCategory(this.categoryId, data)
+      .subscribe((rta) => {
+        this.router.navigate(['/admin/categories']);
+      });
+  }
+
+  //Traer info de la categoría para ponerla en el form y actualizarla
+  private getCategory() {
+    this.categoriesService.getCategory(this.categoryId).subscribe((data) => {
       this.form.patchValue(data);
     });
   }
@@ -80,21 +99,22 @@ export class CategoryFormComponent implements OnInit {
     const ref = this.storage.ref(name);
     const task = this.storage.upload(name, image);
 
-    task.percentageChanges()
-    .pipe(map(Math.ceil))
-    .pipe(
-      finalize(() => {
-        this.image$ = ref.getDownloadURL();
-        this.image$.subscribe(url => {
-          console.log(url);
-          this.imageField.setValue(url);
-        });
-        this.showProgressBar = false;
-      })
-    )
-    .subscribe(per => {
-      this.percentageProgressBar = per
-    });
+    task
+      .percentageChanges()
+      .pipe(map(Math.ceil))
+      .pipe(
+        finalize(() => {
+          this.image$ = ref.getDownloadURL();
+          this.image$.subscribe((url) => {
+            console.log(url);
+            this.imageField.setValue(url);
+          });
+          this.showProgressBar = false;
+        })
+      )
+      .subscribe((per) => {
+        this.percentageProgressBar = per;
+      });
   }
 
   get nameField() {
@@ -104,5 +124,4 @@ export class CategoryFormComponent implements OnInit {
   get imageField() {
     return this.form.get('image');
   }
-
 }
