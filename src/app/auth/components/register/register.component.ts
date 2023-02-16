@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
         validators: MyValidators.matchPasswords,
       }
     );
-
+      //VALIDACIONES EN RUNTIME
     this.typeField.valueChanges.subscribe((value) => {
       console.log(value);
       if(value === 'company'){
