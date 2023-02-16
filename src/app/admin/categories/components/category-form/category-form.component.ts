@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { CategoriesService } from './../../../../core/services/categories.service';
+import { MyValidators } from 'src/app/utils/validators';
 
 @Component({
   selector: 'app-category-form',
@@ -18,32 +19,35 @@ export class CategoryFormComponent implements OnInit {
   image$: Observable<string>;
   percentageProgressBar = 0;
   showProgressBar = false;
+  categoryId: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
     private router: Router,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private route: ActivatedRoute
   ) {
     this.buildForm();
   }
 
   ngOnInit(): void {
+    //Detectar id por meido de la ruta
+    this.route.params.subscribe((params: Params) => {
+      this.categoryId = params['id'];
+
+      // Traer la info de la categoría al form
+      if (this.categoryId){
+        this.getCategory();
+      }
+    })
   }
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4)]],
+      name: ['', [Validators.required, Validators.minLength(4), MyValidators.validateCategory(this.categoriesService)]],
       image: ['', Validators.required]
     });
-  }
-
-  get nameField() {
-    return this.form.get('name');
-  }
-
-  get imageField() {
-    return this.form.get('image');
   }
 
   save() {
@@ -59,6 +63,13 @@ export class CategoryFormComponent implements OnInit {
     this.categoriesService.createCategory(data)
     .subscribe(rta => {
       this.router.navigate(['/admin/categories']);
+    });
+  }
+
+  private getCategory(){
+    this.categoriesService.getCategory(this.categoryId)
+    .subscribe(data => {
+      this.form.patchValue(data);
     });
   }
 
@@ -84,6 +95,14 @@ export class CategoryFormComponent implements OnInit {
     .subscribe(per => {
       this.percentageProgressBar = per
     });
+  }
+
+  get nameField() {
+    return this.form.get('name');
+  }
+
+  get imageField() {
+    return this.form.get('image');
   }
 
 }

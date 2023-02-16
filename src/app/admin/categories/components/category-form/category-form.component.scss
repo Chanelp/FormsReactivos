@@ -30,25 +30,13 @@ form{
   }
 }
 
-.fileImg::before {
-  background-color: #dcade7;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 3px;
-  content: 'Seleccionar imagen'; /* texto por defecto */
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+.btn-upload {
+  & input[type=file]{
+    display: none;
+  }
 }
 
-.fileImg input[type="file"] {
-  opacity: 0;
-  width: 200px;
-  height: 32px;
-  display: inline-block;
+img{
+  width: 100%;
+  box-sizing: content-box;
 }
-

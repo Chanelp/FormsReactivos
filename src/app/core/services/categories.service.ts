@@ -11,8 +11,8 @@ export class CategoriesService {
 
   constructor(private http: HttpClient) { }
 
-  get(id){
-    return JSON.parse(localStorage.getItem(`Form${id}`));
+  getCategory(id){
+    return this.http.get<Category>(`${environment.url_api}/categories/${id}`);
   }
 
   getAllCategories() {
@@ -30,6 +30,5 @@ export class CategoriesService {
   checkCategory(name: string) {
     return this.http.post(`${environment.url_api}/categories/availability`, {name});
   }
-
 
 }
