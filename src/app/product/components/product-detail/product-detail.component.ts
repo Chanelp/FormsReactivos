@@ -26,7 +26,7 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  fetchProduct(id: string) {
+  fetchProduct(id: number) {
     this.productsService.getProduct(id)
     .subscribe(product => {
       this.product = product;
@@ -35,7 +35,7 @@ export class ProductDetailComponent implements OnInit {
 
   createProduct() {
     const newProduct: Product = {
-      id: '222',
+      id: 2,
       title: 'nuevo desde angular',
       images: ['assets/images/banner-1.jpg'],
       price: 3000,
@@ -52,7 +52,7 @@ export class ProductDetailComponent implements OnInit {
       price: 555555,
       description: 'edicion titulo'
     };
-    this.productsService.updateProduct('2', updateProduct)
+    this.productsService.updateProduct(2, updateProduct)
     .subscribe(product => {
       console.log(product);
     });
