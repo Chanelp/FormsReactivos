@@ -20,7 +20,7 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      const id = params.id;
+      const id = params['id'];
       this.fetchProduct(id);
       // this.product = this.productsService.getProduct(id);
     });
@@ -59,7 +59,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   deleteProduct() {
-    this.productsService.deleteProduct('222')
+    this.productsService.deleteProduct(44)
     .subscribe(rta => {
       console.log(rta);
     });

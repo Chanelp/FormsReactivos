@@ -30,7 +30,7 @@ export class ProductsService {
     return this.http.put(`${environment.url_api}/products/${id}`, changes);
   }
 
-  deleteProduct(id: string) {
+  deleteProduct(id: number) {
     return this.http.delete(`${environment.url_api}/products/${id}`);
   }
 }

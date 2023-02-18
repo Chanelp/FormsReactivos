@@ -21,15 +21,28 @@
           </div>
         </div>
     </div>
-    
+
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Datos personales</ng-template>
     <h1>contenifo</h1>
+    <button type="button" (click)="addAddressField()">Add address</button>
+    <div formArrayName="address" *ngFor="let address of addressField.controls; let i=index">
+      <div [formGroupName]="i">
+        <mat-form-field>
+          <mat-label>Zip</mat-label>
+          <input type="text" placeholder="Zip" formControlName="zip">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Zip</mat-label>
+          <input type="text" placeholder="Text" formControlName="text">
+        </mat-form-field>
+      </div>
+    </div>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Pago</ng-template>
-    <h1>contenifo</h1>
+    <h1>contenido</h1>
   </mat-step>
 </mat-horizontal-stepper>
 

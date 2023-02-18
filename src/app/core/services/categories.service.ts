@@ -23,7 +23,7 @@ export class CategoriesService {
     return this.http.post<Category>(`${environment.url_api}/categories/`, data);
   }
 
-  updateCategory(id: string, data: Partial<Category>) {
+  updateCategory(id: number, data: Partial<Category>) {
     return this.http.put<Category>(`${environment.url_api}/categories/${id}`, data);
   }
 
