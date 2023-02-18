@@ -49,6 +49,16 @@ export class ProductCreateComponent implements OnInit {
     }
   }
 
+  private buildForm() {
+    this.form = this.formBuilder.group({
+      title: ['', [Validators.required, Validators.minLength(4)]],
+      price: ['', [Validators.required, MyValidators.isPriceValid]],
+      images: [this.images[0], Validators.required],
+      categoryId: ['', Validators.required],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+    });
+  }
+
   uploadFile(event) {
     const file = event.target.files[0];
     const name = 'image.png';
@@ -67,16 +77,6 @@ export class ProductCreateComponent implements OnInit {
       })
     )
     .subscribe();
-  }
-
-  private buildForm() {
-    this.form = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.minLength(4)]],
-      price: ['', [Validators.required, MyValidators.isPriceValid]],
-      images: [this.images[0], Validators.required],
-      categoryId: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(10)]],
-    });
   }
 
   get priceField() {
