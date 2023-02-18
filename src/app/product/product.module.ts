@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ProductComponent } from './components/product/product.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
@@ -19,6 +20,7 @@ import { MaterialModule } from './../material/material.module';
     CommonModule,
     SharedModule,
     ProductRoutingModule,
+    ReactiveFormsModule,
     MaterialModule
   ]
 })

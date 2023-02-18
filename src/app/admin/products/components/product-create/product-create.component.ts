@@ -56,7 +56,12 @@ export class ProductCreateComponent implements OnInit {
       images: [this.images[0], Validators.required],
       categoryId: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(10)]],
+      stock: [100, Validators.required]
     });
+
+    this.form.get('stock').valueChanges.subscribe(value => {
+      console.log(value);
+    })
   }
 
   uploadFile(event) {
