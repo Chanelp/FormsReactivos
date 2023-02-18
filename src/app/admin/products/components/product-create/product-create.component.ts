@@ -19,6 +19,7 @@ export class ProductCreateComponent implements OnInit {
 
   form: UntypedFormGroup;
   image$: Observable<any>;
+  images = []
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -56,7 +57,8 @@ export class ProductCreateComponent implements OnInit {
         this.image$ = fileRef.getDownloadURL();
         this.image$.subscribe(url => {
           console.log(url);
-          this.form.get('image').setValue(url);
+          this.images.push(url);
+          this.form.get('images').setValue(this.images);
         });
       })
     )
@@ -65,11 +67,11 @@ export class ProductCreateComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      id: ['', [Validators.required]],
-      title: ['', [Validators.required]],
+      title: ['', [Validators.required, Validators.minLength(4)]],
       price: ['', [Validators.required, MyValidators.isPriceValid]],
-      image: [''],
-      description: ['', [Validators.required]],
+      images: [this.images[0], Validators.required],
+      categoryId: ['', Validators.required],
+      description: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
 

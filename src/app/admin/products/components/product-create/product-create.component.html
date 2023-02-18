@@ -4,13 +4,13 @@
       <mat-card-title>Producto</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-xs">
           <mat-form-field>
             <input placeholder="Id" formControlName="id" matInput type="text">
           </mat-form-field>
         </div>
-      </div>
+      </div> -->
       <div class="row">
         <div class="col-xs">
           <mat-form-field>
@@ -32,7 +32,14 @@
       <div class="row">
         <div class="col-xs">
           <mat-form-field>
-            <textarea placeholder="Text" formControlName="description" matInput></textarea>
+            <input placeholder="Category" formControlName="categoryId" matInput type="number">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+          <mat-form-field>
+            <textarea placeholder="Description" formControlName="description" matInput></textarea>
           </mat-form-field>
         </div>
       </div>
@@ -47,5 +54,5 @@
       <button [disabled]="form.invalid" mat-raised-button type="submit">Guardar</button>
     </mat-card-actions>
   </mat-card>
-  
+
 </form>
