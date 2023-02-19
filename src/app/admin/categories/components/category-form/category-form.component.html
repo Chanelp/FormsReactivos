@@ -34,13 +34,15 @@
       <div class="row">
         <div class="col-xs">
           <label class="btn-upload">
-          <img *ngIf="imageField.value" [src]="imageField.value" />
-          <button type="button" mat-raised-button (click)="fileInput.click()">
-            <mat-icon aria-hidden="false" aria-label="Carga de archivo">cloud_upload</mat-icon>
-            Cargar Imagen
-          </button>
-          <input type="file" #fileInput (change)="uploadFile($event)" />
-        </label>
+            <img *ngIf="imageField.value" [src]="imageField.value" />
+            <button type="button" mat-raised-button (click)="fileInput.click()">
+              <mat-icon aria-hidden="false" aria-label="Carga de archivo"
+                >cloud_upload</mat-icon
+              >
+              Cargar Imagen
+            </button>
+            <input type="file" #fileInput (change)="uploadFile($event)" />
+          </label>
           <div
             class="messages"
             *ngIf="imageField.touched && imageField.invalid"
@@ -49,7 +51,11 @@
               Este campo es requerido
             </mat-error>
           </div>
-          <mat-progress-bar *ngIf="showProgressBar" mode="determinate" [value]="percentageProgressBar"></mat-progress-bar>
+          <mat-progress-bar
+            *ngIf="showProgressBar"
+            mode="determinate"
+            [value]="percentageProgressBar"
+          ></mat-progress-bar>
         </div>
       </div>
     </mat-card-content>

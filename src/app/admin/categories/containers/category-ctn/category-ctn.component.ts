@@ -14,7 +14,6 @@ import { Category } from 'src/app/core/models/category.model';
   styleUrls: ['./category-ctn.component.scss'],
 })
 export class CategoryCtnComponent implements OnInit {
-
   form: FormGroup = new FormGroup({});
   category: Category;
 
@@ -50,7 +49,7 @@ export class CategoryCtnComponent implements OnInit {
 
   //Traer info de la categoría para ponerla en el form y actualizarla
   private getCategory(id) {
-    this.categoriesService.getCategory(id).subscribe(data => {
+    this.categoriesService.getCategory(id).subscribe((data) => {
       this.category = data;
     });
   }

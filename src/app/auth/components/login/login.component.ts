@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from './../../../core/services/auth.service';
@@ -7,10 +11,9 @@ import { AuthService } from './../../../core/services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   form: UntypedFormGroup;
 
   constructor(
@@ -21,20 +24,20 @@ export class LoginComponent implements OnInit {
     this.buildForm();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   login(event: Event) {
     event.preventDefault();
     if (this.form.valid) {
       const value = this.form.value;
-      this.authService.login(value.email, value.password)
-      .then(() => {
-        this.router.navigate(['/admin']);
-      })
-      .catch(() => {
-        alert('no es valido');
-      });
+      this.authService
+        .login(value.email, value.password)
+        .then(() => {
+          this.router.navigate(['/admin']);
+        })
+        .catch(() => {
+          alert('no es valido');
+        });
     }
   }
 
@@ -44,5 +47,4 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]],
     });
   }
-
 }

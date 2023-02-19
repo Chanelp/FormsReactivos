@@ -22,7 +22,9 @@
     <mat-form-field>
       <mat-label>Descripcion</mat-label>
       <input type="text" matInput formControlName="descripcion" />
-      <mat-error [class.active]="descripcionField.touched && descripcionField.invalid">
+      <mat-error
+        [class.active]="descripcionField.touched && descripcionField.invalid"
+      >
         <ng-container *ngIf="descripcionField.hasError('required')">
           Este campo es requerido
         </ng-container>
@@ -130,15 +132,31 @@
 
     <!-- INPUTS CHECKBOX Y RADIO -->
     <div>
-      <mat-radio-group aria-label="Select an option" formControlName="genre" >
-        <mat-radio-button value="Male" name="genre" (change)="radioChand($event)">Male</mat-radio-button>
-        <mat-radio-button value="Female" name="genre" (change)="radioChand($event)">Female</mat-radio-button>
-        <mat-radio-button value="Other" name="genre" (change)="radioChand($event)">Other</mat-radio-button>
+      <mat-radio-group aria-label="Select an option" formControlName="genre">
+        <mat-radio-button
+          value="Male"
+          name="genre"
+          (change)="radioChand($event)"
+          >Male</mat-radio-button
+        >
+        <mat-radio-button
+          value="Female"
+          name="genre"
+          (change)="radioChand($event)"
+          >Female</mat-radio-button
+        >
+        <mat-radio-button
+          value="Other"
+          name="genre"
+          (change)="radioChand($event)"
+          >Other</mat-radio-button
+        >
       </mat-radio-group>
     </div>
 
     <div>
-      <mat-checkbox formControlName="agree">Checked
+      <mat-checkbox formControlName="agree"
+        >Checked
         <mat-error [class.active]="agreeField.touched && agreeField.invalid">
           <ng-container *ngIf="agreeField.hasError('required')">
             Este campo es requerido
@@ -160,7 +178,6 @@
       </button>
     </div>
   </mat-card>
-
 </form>
 
 <mat-card *ngIf="valores" class="ctnp">
@@ -169,7 +186,7 @@
     <mat-card-title>{{ valores.name }}</mat-card-title>
     <mat-card-subtitle>{{ valores.age }}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image [src]="valores.image">
+  <img mat-card-image [src]="valores.image" />
   <mat-card-content>
     <p>
       {{ valores.descripcion }}

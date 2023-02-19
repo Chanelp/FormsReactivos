@@ -44,7 +44,7 @@ export class ProductEditComponent implements OnInit {
       this.productsService.getProduct(this.id).subscribe((product) => {
         this.form.patchValue({
           ...product,
-          state: this.states[0] //Valor por defecto
+          state: this.states[0], //Valor por defecto
         });
       });
     });
